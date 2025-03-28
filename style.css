@@ -89,9 +89,26 @@ ul {
 
 .vote-buttons {
   margin-left: auto;
+  flex-shrink: 0;
   display: flex;
   gap: 8px;
-  flex-shrink: 0;
+}
+
+.vote-buttons button {
+  border: none;
+  background-color: #6e6863;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 100px;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.vote-buttons button:hover {
+  background-color: #282726;
 }
 
 .source:link,
@@ -118,11 +135,11 @@ ul {
   border-radius: 100px;
   color: inherit;
   cursor: pointer;
-  transition: transform 1s;
+  transition: transform 0.3s;
 }
 
 .btn:hover {
-  transform: scale(110%) rotate(-1.5deg);
+  transform: scale(110%) rotate(-1.7deg);
 }
 
 .btn-large {
@@ -140,6 +157,8 @@ ul {
   background-color: #44403c;
   background-image: none;
 }
+
+
 
 /* Media Queries */
 @media (max-width: 1200px) {
