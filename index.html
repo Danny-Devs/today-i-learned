@@ -20,7 +20,7 @@
           <h1>Today I Learned</h1>
         </div>
 
-        <button class="btn btn-large">Share a fact</button>
+        <button class="btn btn-large btn-share">Share a fact</button>
       </header>
 
       <form class="fact-form">
@@ -43,64 +43,32 @@
               <button class="btn btn-all-categories">All</button>
             </li>
             <li class="category">
-              <button class="btn btn-category" style="background-color: #3b82f6"
-                >Technology</button
+              <button
+                class="btn btn-category"
+                style="background-color: #3b82f6"
               >
+                Technology
+              </button>
             </li>
             <li class="category">
-              <button class="btn btn-category" style="background-color: #16a34a"
-                >Science</button
+              <button
+                class="btn btn-category"
+                style="background-color: #16a34a"
               >
+                Science
+              </button>
             </li>
           </ul>
         </aside>
 
         <section>
-          <ul>
-            <li class="fact">
-              <p>
-                React is being developed by Meta (formerly facebook)
-                <a
-                  class="source"
-                  href="https://opensource.fb.com"
-                  target="_blank"
-                  >(Source)</a
-                >
-              </p>
-              <span class="tag" style="background-color: #3b82f6"
-                >#technology#</span
-              >
-              <div class="vote-buttons">
-                <button>👍 24</button>
-                <button>🤯 9</button>
-                <button>⛔️ 4</button>
-              </div>
-            </li>
-
-            <li class="fact">
-              <p>
-                Millennial dads spend 3 times as much time with their kids than
-                their fathers spent with them. In 1982, 43% of fathers had never
-                changed a diaper. Today, that number is down to 3%
-                <a
-                  class="source"
-                  href="https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids"
-                  target="_blank"
-                  >(Source)</a
-                >
-              </p>
-              <span class="tag" style="background-color: #16a34a"
-                >#society#</span
-              >
-              <div class="vote-buttons">
-                <button>👍 24</button>
-                <button>🤯 9</button>
-                <button>⛔️ 4</button>
-              </div>
-            </li>
+          <ul class="facts-list">
+            
           </ul>
         </section>
       </main>
     </div>
+
+    <script type="module" src="script.js"></script>
   </body>
 </html>
