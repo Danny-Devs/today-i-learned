@@ -5,7 +5,13 @@ function Fact({ fact }) {
 
   return (
     <li className="fact">
-      <p>{fact.text}</p>
+      <p>{fact.text} <a href={fact.source} target="_blank" rel="noopener noreferrer" className="source">(Source)</a></p>
+      <span className="tag" style={{ backgroundColor: category.color }}>{category.name}</span>
+      <div className="vote-buttons">
+        <button>👍 {fact.votesInteresting}</button>
+        <button>🤯 {fact.votesMindblowing}</button>
+        <button>⛔️ {fact.votesFalse}</button>
+      </div>
     </li>
   );
 }

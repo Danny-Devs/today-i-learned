@@ -5,6 +5,7 @@ import CategoryFilter from './CategoryFilter';
 import './style.css';
 
 function App() {
+  const appTitle = 'Today I Learned';
   const [facts, setFacts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,7 +44,7 @@ function App() {
   return (
     <>
       <div className="container">
-        <Header />
+        <Header title={appTitle} />
         <main className="main">
         <aside>
           <CategoryFilter />
