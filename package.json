@@ -1,25 +1,27 @@
 {
   "name": "today-i-learned",
-  "version": "1.0.0",
-  "main": "script.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "lint": "eslint .",
     "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Danny-Devs/today-i-learned.git"
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Danny-Devs/today-i-learned/issues"
-  },
-  "homepage": "https://github.com/Danny-Devs/today-i-learned#readme",
-  "description": "",
   "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.23.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
     "vite": "^6.2.4"
   }
 }

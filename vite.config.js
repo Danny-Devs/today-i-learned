@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vite.dev/config/
 export default defineConfig({
-  // Vite will automatically load .env files
-  // No need for additional config here
+  plugins: [react()],
 })
