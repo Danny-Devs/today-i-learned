@@ -21,7 +21,12 @@ function NewFactForm({ showForm, onPostFact }) {
       return;
     }
     try {
-      new URL(source);
+      // If URL doesn't start with http:// or https://, add https://
+      const urlToCheck =
+        source.startsWith('http://') || source.startsWith('https://')
+          ? source
+          : `https://${source}`;
+      new URL(urlToCheck);
     } catch {
       setModalMessage('Please provide a valid URL.');
       return;
