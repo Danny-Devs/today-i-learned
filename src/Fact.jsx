@@ -1,9 +1,9 @@
-import CATEGORIES from './constants';
+import CATEGORIES from './utils/constants';
 
 function Fact({ fact }) {
   const category = CATEGORIES.find(c => c.name === fact.category);
 
-  return ( 
+  return (
     <li className="fact">
       <p>
         {fact.text}{' '}

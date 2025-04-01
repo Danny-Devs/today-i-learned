@@ -1,4 +1,4 @@
-import CATEGORIES from './constants';
+import CATEGORIES from './utils/constants';
 import { useState } from 'react';
 function CategoryFilter() {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -11,24 +11,24 @@ function CategoryFilter() {
   }
 
   return (
-      <ul>
-        <li className="category">
-          <button className="btn btn-all-categories">All</button>
+    <ul>
+      <li className="category">
+        <button className="btn btn-all-categories">All</button>
+      </li>
+      {CATEGORIES.map(category => (
+        <li className="category" key={category.name}>
+          <button
+            className="btn btn-category"
+            style={{ backgroundColor: category.color }}
+            onClick={() => {
+              filterFacts(category.name);
+            }}
+          >
+            {category.name}
+          </button>
         </li>
-        {CATEGORIES.map(category => (
-          <li className="category" key={category.name}>
-            <button
-              className="btn btn-category"
-              style={{ backgroundColor: category.color }}
-              onClick={() => {
-                filterFacts(category.name);
-              }}
-            >
-              {category.name}
-            </button>
-          </li>
-        ))}
-      </ul>
+      ))}
+    </ul>
   );
 }
 
