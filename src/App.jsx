@@ -42,17 +42,15 @@ function App() {
   }, []);
 
   return (
-    <>
-      <div className="container">
-        <Header title={appTitle} />
-        <main className="main">
+    <div className="container">
+      <Header title={appTitle} />
+      <main className="main">
         <aside>
           <CategoryFilter />
         </aside>
-          <FactList facts={facts} />
-        </main>
-      </div>
-    </>
+        <FactList facts={facts} />
+      </main>
+    </div>
   );
 }
 

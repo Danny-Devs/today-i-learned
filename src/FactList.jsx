@@ -10,6 +10,7 @@ function FactList({ facts }) {
             <p>No facts for this category yet! Create the first one!</p>
           )}
         </ul>
+        <p>There are {facts.length} facts in this list. Add your own!</p>
       </section>
   );
 }

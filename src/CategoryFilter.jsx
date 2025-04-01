@@ -1,6 +1,15 @@
 import CATEGORIES from './constants';
-
+import { useState } from 'react';
 function CategoryFilter() {
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  function filterFacts(category) {
+    setActiveCategory(category);
+    console.log(activeCategory);
+    // TODO: filter facts
+    // style active category
+  }
+
   return (
       <ul>
         <li className="category">
@@ -11,6 +20,9 @@ function CategoryFilter() {
             <button
               className="btn btn-category"
               style={{ backgroundColor: category.color }}
+              onClick={() => {
+                filterFacts(category.name);
+              }}
             >
               {category.name}
             </button>
