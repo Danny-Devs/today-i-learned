@@ -49,7 +49,7 @@ function App() {
   return (
     <div className="container">
       <Header showForm={showForm} onToggleForm={handleToggleForm} />
-      <NewFactForm showForm={showForm} />
+      <NewFactForm showForm={showForm} onPostFact={handleToggleForm} />
       <main className="main">
         <aside>
           <CategoryFilter />
