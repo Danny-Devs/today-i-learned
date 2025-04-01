@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import FactList from './FactList';
 import Header from './Header';
 import CategoryFilter from './CategoryFilter';
+import CATEGORIES from './constants';
+
 import './style.css';
 
 function App() {
-  const appTitle = 'Today I Learned';
   const [facts, setFacts] = useState([]);
+  const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -41,9 +43,25 @@ function App() {
     getFacts();
   }, []);
 
+  const handleToggleForm = () => {
+    setShowForm(show => !show);
+  };
+
   return (
     <div className="container">
-      <Header title={appTitle} />
+      <Header showForm={showForm} onToggleForm={handleToggleForm} />
+      <form className={`fact-form ${showForm ? '' : 'hidden'}`}>
+        <input type="text" placeholder="Share a fact with the world..." />
+        <span>200</span>
+        <input type="text" placeholder="Trustworthy source..." />
+        <select>
+          <option value="">Choose category:</option>
+          {CATEGORIES.map(category => (
+            <option value={category.name} key={category.name}>{category.name}</option>
+          ))}
+        </select>
+        <button class="btn btn-large">Post</button>
+      </form>
       <main className="main">
         <aside>
           <CategoryFilter />
