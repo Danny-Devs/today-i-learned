@@ -17,7 +17,7 @@ function App() {
     setIsLoading(true);
     setCurrentCategory(category);
 
-    const { data: facts, error } = await supabase
+    const { data, error } = await supabase
       .from('facts')
       .select('*')
       .order('created_at', { ascending: false })
@@ -31,8 +31,8 @@ function App() {
     // Filter in memory for specific categories
     const filteredFacts =
       category === 'All'
-        ? facts
-        : facts.filter(fact => fact.category === category);
+        ? data
+        : data.filter(fact => fact.category === category);
 
     setFacts(filteredFacts);
     setIsLoading(false);
