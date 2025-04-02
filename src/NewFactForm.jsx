@@ -55,8 +55,6 @@ function NewFactForm({ showForm, onPostFact, setFacts }) {
       return;
     }
 
-    console.log('Inserted data:', data);
-
     // Update the facts list with the new fact
     setFacts(facts => [data[0], ...facts]);
 

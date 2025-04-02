@@ -13,7 +13,6 @@ function App() {
 
   useEffect(() => {
     async function getFacts() {
-      console.log('Fetching facts...');
       const { data, error } = await supabase
         .from('facts')
         .select('*')
@@ -24,7 +23,6 @@ function App() {
         return;
       }
 
-      console.log('Fetched facts:', data);
       setFacts(data);
       setIsLoading(false);
     }
@@ -48,7 +46,11 @@ function App() {
         <aside>
           <CategoryFilter />
         </aside>
-        <FactList facts={facts} />
+        {isLoading ? (
+          <p className="loading">Loading facts...</p>
+        ) : (
+          <FactList facts={facts} />
+        )}
       </main>
     </div>
   );
