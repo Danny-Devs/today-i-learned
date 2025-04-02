@@ -2,7 +2,7 @@
 
 A fun and interactive platform for sharing and discovering interesting facts. Users can share facts, categorize them, and vote on their validity and impact. Think of it as a "Reddit for Facts" where knowledge meets social interaction.
 
-![Today I Learned Screenshot](screenshot.png)
+![Today I Learned Screenshot](public/til_screenshot_optimized.jpg)
 
 ## 🚀 Features
 
@@ -21,7 +21,7 @@ A fun and interactive platform for sharing and discovering interesting facts. Us
 - **Database:** Supabase (PostgreSQL)
 - **State Management:** React Hooks + Custom Hooks
 - **Styling:** CSS3 with modern features
-- **Deployment:** [Your deployment platform]
+- **Deployment:** Netlify
 
 ## 🏗️ Project Structure
 
@@ -129,17 +129,9 @@ src/
 - [ ] Related facts
 - [ ] Content moderation
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-## 📝 License
-
-[Your chosen license]
-
 ## 🙏 Acknowledgments
 
-- Original concept by Jonas Schmedtmann - demonstrating how to build a full-stack app in under a week
+- Original concept by [Jonas Schmedtmann](https://jonas.io/) - demonstrating how to build a full-stack app in under a week
 - Built with React, Vite, and Supabase
 - Enhanced with custom hooks pattern and component-driven architecture
 - Special thanks to the React and Supabase communities
