@@ -13,31 +13,20 @@ function App() {
 
   useEffect(() => {
     async function getFacts() {
-      try {
-        const url = import.meta.env.VITE_SUPABASE_URL + '/rest/v1/facts';
+      console.log('Fetching facts...');
+      const { data, error } = await supabase
+        .from('facts')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-        const res = await fetch(url, {
-          headers: {
-            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-            'Content-Type': 'application/json',
-            Prefer: 'return=minimal'
-          }
-        });
-
-        const text = await res.text(); // Get raw response first
-
-        try {
-          const data = JSON.parse(text);
-          setFacts(data);
-        } catch (e) {
-          console.error('Failed to parse JSON:', e);
-        }
-      } catch (error) {
-        console.error('Error fetching facts:', error);
-      } finally {
-        setIsLoading(false);
+      if (error) {
+        console.error('Fetch error:', error);
+        return;
       }
+
+      console.log('Fetched facts:', data);
+      setFacts(data);
+      setIsLoading(false);
     }
 
     getFacts();
@@ -50,7 +39,11 @@ function App() {
   return (
     <div className="container">
       <Header showForm={showForm} onToggleForm={handleToggleForm} />
-      <NewFactForm showForm={showForm} onPostFact={handleToggleForm} setFacts={setFacts} />
+      <NewFactForm
+        showForm={showForm}
+        onPostFact={handleToggleForm}
+        setFacts={setFacts}
+      />
       <main className="main">
         <aside>
           <CategoryFilter />

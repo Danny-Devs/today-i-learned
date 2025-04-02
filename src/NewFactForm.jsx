@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import CATEGORIES from './utils/constants';
 import Modal from './components/Modal';
-
- function NewFactForm({ showForm, onPostFact, setFacts }) {
+import supabase from './supabase';
+function NewFactForm({ showForm, onPostFact, setFacts }) {
   const [text, setText] = useState('');
   const [source, setSource] = useState('');
   const [category, setCategory] = useState('');
-  const [newFact, setNewFact] = useState(null);
   const [modalMessage, setModalMessage] = useState('');
 
   const handleSubmit = async e => {
@@ -36,19 +35,30 @@ import Modal from './components/Modal';
       return;
     }
 
-    // Create a new fact object
-    setNewFact({
-      id: crypto.randomUUID(),
-      text,
-      source,
-      category,
-      votesInteresting: 0,
-      votesMindblowing: 0,
-      votesFalse: 0,
-      createdIn: new Date().getFullYear()
-    });
-    // Save the new fact to the database
-    setFacts(facts => [newFact, ...facts]);
+    const { data, error } = await supabase
+      .from('facts')
+      .insert([
+        {
+          text,
+          source,
+          category,
+          votesInteresting: 0,
+          votesMindblowing: 0,
+          votesFalse: 0
+        }
+      ])
+      .select();
+
+    if (error) {
+      console.error('Insert error:', error);
+      setModalMessage('Error adding fact. Please try again.');
+      return;
+    }
+
+    console.log('Inserted data:', data);
+
+    // Update the facts list with the new fact
+    setFacts(facts => [data[0], ...facts]);
 
     // Reset the form
     setText('');
