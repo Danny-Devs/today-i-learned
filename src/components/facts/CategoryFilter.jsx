@@ -1,4 +1,4 @@
-import CATEGORIES from './utils/constants';
+import CATEGORIES from '../../utils/constants';
 
 function CategoryFilter({ onSelectCategory }) {
   return (

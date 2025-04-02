@@ -1,65 +1,26 @@
-import { useState, useEffect, useCallback } from 'react';
-import FactList from './FactList';
-import Loader from './components/Loader';
-import Header from './Header';
-import CategoryFilter from './CategoryFilter';
-import NewFactForm from './NewFactForm';
-import supabase from './supabase';
+import { useState, useEffect } from 'react';
+import FactList from './components/facts/FactList';
+import Loader from './components/ui/Loader';
+import Header from './components/layout/Header';
+import CategoryFilter from './components/facts/CategoryFilter';
+import NewFactForm from './components/facts/NewFactForm';
+import { useFactOperations } from './hooks/useFactOperations';
 import './style.css';
 
 function App() {
-  const [facts, setFacts] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState('All');
-  const [error, setError] = useState(null);
-
-  const getFacts = useCallback(async category => {
-    setIsLoading(true);
-    setCurrentCategory(category);
-
-    const { data, error } = await supabase
-      .from('facts')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(100);
-
-    if (error) {
-      console.error('Fetch error:', error);
-      setError(error.message);
-      return;
-    }
-
-    // Filter in memory for specific categories
-    const filteredFacts =
-      category === 'All'
-        ? data
-        : data.filter(fact => fact.category === category);
-
-    setFacts(filteredFacts);
-    setIsLoading(false);
-  }, []);
-
-  const deleteFact = useCallback(
-    async id => {
-      const { error } = await supabase
-        .from('facts')
-        .delete()
-        .eq('id', id)
-        .select();
-
-      if (error) {
-        console.error('Delete error:', error);
-        return;
-      }
-
-      await getFacts(currentCategory);
-    },
-    [getFacts, currentCategory]
-  );
+  const {
+    facts,
+    isLoading,
+    error,
+    currentCategory,
+    getFacts,
+    handleCreateFact,
+    handleDeleteFact,
+    handleVote
+  } = useFactOperations();
 
   useEffect(() => {
-    setIsLoading(true);
     getFacts(currentCategory);
   }, [getFacts, currentCategory]);
 
@@ -73,7 +34,7 @@ function App() {
       <NewFactForm
         showForm={showForm}
         onPostFact={handleToggleForm}
-        setFacts={setFacts}
+        setFacts={handleCreateFact}
       />
       <main className="main">
         <CategoryFilter onSelectCategory={getFacts} />
@@ -85,7 +46,8 @@ function App() {
           <FactList
             facts={facts}
             currentCategory={currentCategory}
-            onDeleteFact={deleteFact}
+            onDeleteFact={handleDeleteFact}
+            onVote={handleVote}
           />
         )}
       </main>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import CATEGORIES from './utils/constants';
-import Modal from './components/Modal';
-import supabase from './supabase';
+import CATEGORIES from '../../utils/constants';
+import Modal from '../ui/Modal';
+
 function NewFactForm({ showForm, onPostFact, setFacts }) {
   const [text, setText] = useState('');
   const [source, setSource] = useState('');
@@ -35,36 +35,32 @@ function NewFactForm({ showForm, onPostFact, setFacts }) {
       return;
     }
 
-    const { data, error } = await supabase
-      .from('facts')
-      .insert([
-        {
-          text,
-          source,
-          category,
-          votesInteresting: 0,
-          votesMindblowing: 0,
-          votesFalse: 0
-        }
-      ])
-      .select();
+    try {
+      const newFact = {
+        text,
+        source,
+        category,
+        votesInteresting: 0,
+        votesMindblowing: 0,
+        votesFalse: 0
+      };
 
-    if (error) {
+      const success = await setFacts(newFact);
+
+      if (success) {
+        // Reset the form
+        setText('');
+        setSource('');
+        setCategory('');
+        // Close the form
+        onPostFact();
+      } else {
+        setModalMessage('Error adding fact. Please try again.');
+      }
+    } catch (error) {
       console.error('Insert error:', error);
       setModalMessage('Error adding fact. Please try again.');
-      return;
     }
-
-    // Update the facts list with the new fact
-    setFacts(facts => [data[0], ...facts]);
-
-    // Reset the form
-    setText('');
-    setSource('');
-    setCategory('');
-
-    // Close the form
-    onPostFact();
   };
 
   return (
@@ -94,9 +90,13 @@ function NewFactForm({ showForm, onPostFact, setFacts }) {
           </option>
         ))}
       </select>
-      <button class="btn btn-large">Post</button>
+      <button className="btn btn-large">Post</button>
       {modalMessage && (
-        <Modal message={modalMessage} onClose={() => setModalMessage('')} type="info" />
+        <Modal
+          message={modalMessage}
+          onClose={() => setModalMessage('')}
+          type="info"
+        />
       )}
     </form>
   );

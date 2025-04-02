@@ -1,10 +1,14 @@
 import { useState } from 'react';
-import CATEGORIES from './utils/constants';
-import Modal from './components/Modal';
+import CATEGORIES from '../../utils/constants';
+import Modal from '../ui/Modal';
 
-function Fact({ fact, onDeleteFact }) {
+function Fact({ fact, onDeleteFact, onVote }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const category = CATEGORIES.find(c => c.name === fact.category);
+
+  const handleVote = column => {
+    onVote(fact.id, column);
+  };
 
   return (
     <li className="fact">
@@ -23,9 +27,15 @@ function Fact({ fact, onDeleteFact }) {
         {category.name}
       </span>
       <div className="vote-buttons">
-        <button>👍 {fact.votesInteresting}</button>
-        <button>🤯 {fact.votesMindblowing}</button>
-        <button>⛔️ {fact.votesFalse}</button>
+        <button onClick={() => handleVote('votesInteresting')}>
+          👍 {fact.votesInteresting}
+        </button>
+        <button onClick={() => handleVote('votesMindblowing')}>
+          🤯 {fact.votesMindblowing}
+        </button>
+        <button onClick={() => handleVote('votesFalse')}>
+          ⛔️ {fact.votesFalse}
+        </button>
         <button className="btn btn-x" onClick={() => setShowDeleteModal(true)}>
           ❌
         </button>
