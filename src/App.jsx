@@ -42,7 +42,7 @@ function App() {
 
   const deleteFact = useCallback(
     async id => {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('facts')
         .delete()
         .eq('id', id)
