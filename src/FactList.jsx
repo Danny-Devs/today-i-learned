@@ -1,17 +1,24 @@
 import Fact from './Fact';
 
-function FactList({ facts }) {
+function FactList({ facts, currentCategory }) {
   return (
-      <section>
-        <ul className="facts-list">
-          {facts.length > 0 ? (
-            facts.map(fact => <Fact key={fact.id} fact={fact} />)
+    <section>
+      <ul className="facts-list">
+        {facts.length > 0 ? (
+          <>
+            {facts.map(fact => (
+              <Fact key={fact.id} fact={fact} />
+            ))}
+          </>
+        ) : (
+          currentCategory === 'All' ? (
+            <p>There are 0 facts in this list. Add your own!</p>
           ) : (
-            <p>No facts for this category yet! Create the first one!</p>
-          )}
-        </ul>
-        <p>There are {facts.length} facts in this list. Add your own!</p>
-      </section>
+            <p>No facts for this category yet. Create the first one!</p>
+          )
+        )}
+      </ul>
+    </section>
   );
 }
 

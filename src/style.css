@@ -236,6 +236,13 @@ ul {
   padding: 12px 24px;
 }
 
+.loading {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 600;
+}
+
 /* Media Queries */
 @media (max-width: 1200px) {
   .fact {
