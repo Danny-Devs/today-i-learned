@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import FactList from './FactList';
 import Loader from './components/Loader';
 import Header from './Header';
@@ -13,26 +13,34 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentCategory, setCurrentCategory] = useState('All');
 
-  useEffect(() => {
-    async function getFacts() {
-      setIsLoading(true);
-      const { data: facts, error } = await supabase
-        .from('facts')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(100);
+  const getFacts = useCallback(async category => {
+    setIsLoading(true);
+    setCurrentCategory(category);
 
-      if (error) {
-        console.error('Fetch error:', error);
-        return;
-      }
+    const { data: facts, error } = await supabase
+      .from('facts')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(100);
 
-      setFacts(facts);
-      setIsLoading(false);
+    if (error) {
+      console.error('Fetch error:', error);
+      return;
     }
 
-    getFacts();
+    // Filter in memory for specific categories
+    const filteredFacts =
+      category === 'All'
+        ? facts
+        : facts.filter(fact => fact.category === category);
+
+    setFacts(filteredFacts);
+    setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    getFacts(currentCategory);
+  }, [getFacts, currentCategory]);
 
   const handleToggleForm = () => {
     setShowForm(show => !show);
@@ -48,11 +56,16 @@ function App() {
       />
       <main className="main">
         <CategoryFilter
+          onSelectCategory={getFacts}
           setFacts={setFacts}
           setIsLoading={setIsLoading}
           setCurrentCategory={setCurrentCategory}
         />
-        {isLoading ? <Loader /> : <FactList facts={facts} currentCategory={currentCategory} />}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <FactList facts={facts} currentCategory={currentCategory} />
+        )}
       </main>
     </div>
   );
