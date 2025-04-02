@@ -3,6 +3,7 @@ import FactList from './FactList';
 import Header from './Header';
 import CategoryFilter from './CategoryFilter';
 import NewFactForm from './NewFactForm';
+import supabase from './supabase';
 import './style.css';
 
 function App() {
@@ -49,7 +50,7 @@ function App() {
   return (
     <div className="container">
       <Header showForm={showForm} onToggleForm={handleToggleForm} />
-      <NewFactForm showForm={showForm} onPostFact={handleToggleForm} />
+      <NewFactForm showForm={showForm} onPostFact={handleToggleForm} setFacts={setFacts} />
       <main className="main">
         <aside>
           <CategoryFilter />

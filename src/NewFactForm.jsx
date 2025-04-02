@@ -2,14 +2,14 @@ import { useState } from 'react';
 import CATEGORIES from './utils/constants';
 import Modal from './components/Modal';
 
-function NewFactForm({ showForm, onPostFact }) {
+ function NewFactForm({ showForm, onPostFact, setFacts }) {
   const [text, setText] = useState('');
   const [source, setSource] = useState('');
   const [category, setCategory] = useState('');
   const [newFact, setNewFact] = useState(null);
   const [modalMessage, setModalMessage] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     // Check if the form is valid
     if (!text) {
@@ -38,10 +38,17 @@ function NewFactForm({ showForm, onPostFact }) {
 
     // Create a new fact object
     setNewFact({
+      id: crypto.randomUUID(),
       text,
       source,
-      category
+      category,
+      votesInteresting: 0,
+      votesMindblowing: 0,
+      votesFalse: 0,
+      createdIn: new Date().getFullYear()
     });
+    // Save the new fact to the database
+    setFacts(facts => [newFact, ...facts]);
 
     // Reset the form
     setText('');
