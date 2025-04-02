@@ -1,12 +1,145 @@
-# React + Vite
+# Today I Learned
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fun and interactive platform for sharing and discovering interesting facts. Users can share facts, categorize them, and vote on their validity and impact. Think of it as a "Reddit for Facts" where knowledge meets social interaction.
 
-Currently, two official plugins are available:
+![Today I Learned Screenshot](screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- Share interesting facts with sources
+- Categorize facts by topic
+- Vote system (Interesting, Mindblowing, False)
+- Real-time updates
+- Category filtering
+- Character limit for concise facts
+- Source URL validation
+- Responsive design
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 💻 Tech Stack
+
+- **Frontend Framework:** React + Vite
+- **Database:** Supabase (PostgreSQL)
+- **State Management:** React Hooks + Custom Hooks
+- **Styling:** CSS3 with modern features
+- **Deployment:** [Your deployment platform]
+
+## 🏗️ Project Structure
+
+```
+src/
+├── components/
+│   ├── facts/          # Fact-related components
+│   ├── layout/         # Structural components
+│   └── ui/            # Shared UI components
+├── hooks/             # Custom React hooks
+├── services/          # API and database services
+├── utils/             # Constants and helpers
+└── style.css         # Global styles
+```
+
+## 🌟 Architecture Highlights
+
+- **Component-Driven Development:** Modular, reusable components
+- **Custom Hooks Pattern:** Centralized state management with `useFactOperations`
+- **Service Layer:** Abstracted database operations in `factService`
+- **Clean Code:** Organized imports, consistent styling, and clear component hierarchy
+
+## 🛠️ Getting Started
+
+1. Clone the repository
+
+   ```bash
+   git clone [your-repo-url]
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables
+
+   ```bash
+   cp .env.example .env
+   # Add your Supabase credentials
+   ```
+
+4. Start the development server
+   ```bash
+   npm run dev
+   ```
+
+## 🗺️ Roadmap
+
+### Phase 1: Authentication & User Management
+
+- [ ] Supabase Auth integration
+- [ ] User profiles
+- [ ] Fact ownership
+- [ ] User reputation system
+- [ ] Protected actions (delete/edit)
+
+### Phase 2: Enhanced Fact Validation
+
+- [ ] Fact verification system
+- [ ] Trusted fact checkers
+- [ ] Source validation
+- [ ] Advanced categorization with tags
+- [ ] Rich text support
+
+### Phase 3: Social Features
+
+- [ ] Comments on facts
+- [ ] Social sharing
+- [ ] User following
+- [ ] Category following
+- [ ] Notification system
+
+### Phase 4: UX Improvements
+
+- [ ] Infinite scroll
+- [ ] Advanced search/filtering
+- [ ] Multiple sort options
+- [ ] Smooth animations
+- [ ] Dark mode
+- [ ] Mobile optimizations
+
+### Phase 5: Performance & Scale
+
+- [ ] React Query integration
+- [ ] Optimistic updates
+- [ ] Pagination/virtualization
+- [ ] Offline support
+- [ ] Analytics integration
+
+### Phase 6: Learning Features
+
+- [ ] Daily fact suggestions
+- [ ] Learning streaks
+- [ ] Quiz mode
+- [ ] Spaced repetition
+- [ ] Flashcard export
+
+### Phase 7: AI Integration
+
+- [ ] Fact suggestions
+- [ ] Duplicate detection
+- [ ] Auto-categorization
+- [ ] Related facts
+- [ ] Content moderation
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+## 📝 License
+
+[Your chosen license]
+
+## 🙏 Acknowledgments
+
+- Original concept by Jonas Schmedtmann - demonstrating how to build a full-stack app in under a week
+- Built with React, Vite, and Supabase
+- Enhanced with custom hooks pattern and component-driven architecture
+- Special thanks to the React and Supabase communities
