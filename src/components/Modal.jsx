@@ -1,4 +1,4 @@
-function Modal({ message, onClose, type = 'info' }) {
+function Modal({ message, onClose, onConfirm, type = 'info' }) {
   return (
     <div className="modal-overlay">
       <div className="modal">
@@ -8,7 +8,7 @@ function Modal({ message, onClose, type = 'info' }) {
             {type === 'confirm' ? 'Cancel' : 'Close'}
           </button>
           {type === 'confirm' && (
-            <button className="btn btn-delete" onClick={onClose}>
+            <button className="btn btn-delete" onClick={onConfirm}>
               Delete
             </button>
           )}

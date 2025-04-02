@@ -40,19 +40,23 @@ function App() {
     setIsLoading(false);
   }, []);
 
-  const deleteFact = useCallback(async (id) => {
-    const { error } = await supabase
-      .from('facts')
-      .delete()
-      .eq('id', id);
-    
-    if (error) {
-      console.error('Delete error:', error);
-      return;
-    }
-    
-    getFacts(currentCategory);  // Refresh the list
-  }, [getFacts, currentCategory]);
+  const deleteFact = useCallback(
+    async id => {
+      const { data, error } = await supabase
+        .from('facts')
+        .delete()
+        .eq('id', id)
+        .select();
+
+      if (error) {
+        console.error('Delete error:', error);
+        return;
+      }
+
+      await getFacts(currentCategory);
+    },
+    [getFacts, currentCategory]
+  );
 
   useEffect(() => {
     setIsLoading(true);
@@ -78,7 +82,11 @@ function App() {
         ) : isLoading ? (
           <Loader />
         ) : (
-          <FactList facts={facts} currentCategory={currentCategory} onDeleteFact={deleteFact} />
+          <FactList
+            facts={facts}
+            currentCategory={currentCategory}
+            onDeleteFact={deleteFact}
+          />
         )}
       </main>
     </div>

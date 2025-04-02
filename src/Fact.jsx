@@ -26,10 +26,7 @@ function Fact({ fact, onDeleteFact }) {
         <button>👍 {fact.votesInteresting}</button>
         <button>🤯 {fact.votesMindblowing}</button>
         <button>⛔️ {fact.votesFalse}</button>
-        <button
-          className="btn btn-x"
-          onClick={() => setShowDeleteModal(true)}
-        >
+        <button className="btn btn-x" onClick={() => setShowDeleteModal(true)}>
           ❌
         </button>
       </div>
@@ -38,6 +35,7 @@ function Fact({ fact, onDeleteFact }) {
         <Modal
           message="Are you sure you want to delete this fact?"
           onClose={() => setShowDeleteModal(false)}
+          onConfirm={() => onDeleteFact(fact.id)}
           type="confirm"
         />
       )}
