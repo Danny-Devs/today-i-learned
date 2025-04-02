@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import CATEGORIES from './utils/constants';
+import Modal from './components/Modal';
 
-function Fact({ fact }) {
+function Fact({ fact, onDeleteFact }) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const category = CATEGORIES.find(c => c.name === fact.category);
 
   return (
@@ -23,7 +26,21 @@ function Fact({ fact }) {
         <button>👍 {fact.votesInteresting}</button>
         <button>🤯 {fact.votesMindblowing}</button>
         <button>⛔️ {fact.votesFalse}</button>
+        <button
+          className="btn btn-x"
+          onClick={() => setShowDeleteModal(true)}
+        >
+          ❌
+        </button>
       </div>
+
+      {showDeleteModal && (
+        <Modal
+          message="Are you sure you want to delete this fact?"
+          onClose={() => setShowDeleteModal(false)}
+          type="confirm"
+        />
+      )}
     </li>
   );
 }

@@ -96,7 +96,7 @@ function NewFactForm({ showForm, onPostFact, setFacts }) {
       </select>
       <button class="btn btn-large">Post</button>
       {modalMessage && (
-        <Modal message={modalMessage} onClose={() => setModalMessage('')} />
+        <Modal message={modalMessage} onClose={() => setModalMessage('')} type="info" />
       )}
     </form>
   );

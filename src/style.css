@@ -243,6 +243,16 @@ ul {
   font-weight: 600;
 }
 
+.modal-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.btn-x {
+  background: none;
+}
+
 /* Media Queries */
 @media (max-width: 1200px) {
   .fact {

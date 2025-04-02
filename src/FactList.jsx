@@ -1,13 +1,13 @@
 import Fact from './Fact';
 
-function FactList({ facts, currentCategory }) {
+function FactList({ facts, currentCategory, onDeleteFact }) {
   return (
     <section>
       <ul className="facts-list">
         {facts.length > 0 ? (
           <>
             {facts.map(fact => (
-              <Fact key={fact.id} fact={fact} />
+              <Fact key={fact.id} fact={fact} onDeleteFact={onDeleteFact} />
             ))}
           </>
         ) : (

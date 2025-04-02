@@ -12,6 +12,7 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentCategory, setCurrentCategory] = useState('All');
+  const [error, setError] = useState(null);
 
   const getFacts = useCallback(async category => {
     setIsLoading(true);
@@ -25,6 +26,7 @@ function App() {
 
     if (error) {
       console.error('Fetch error:', error);
+      setError(error.message);
       return;
     }
 
@@ -38,7 +40,22 @@ function App() {
     setIsLoading(false);
   }, []);
 
+  const deleteFact = useCallback(async (id) => {
+    const { error } = await supabase
+      .from('facts')
+      .delete()
+      .eq('id', id);
+    
+    if (error) {
+      console.error('Delete error:', error);
+      return;
+    }
+    
+    getFacts(currentCategory);  // Refresh the list
+  }, [getFacts, currentCategory]);
+
   useEffect(() => {
+    setIsLoading(true);
     getFacts(currentCategory);
   }, [getFacts, currentCategory]);
 
@@ -55,16 +72,13 @@ function App() {
         setFacts={setFacts}
       />
       <main className="main">
-        <CategoryFilter
-          onSelectCategory={getFacts}
-          setFacts={setFacts}
-          setIsLoading={setIsLoading}
-          setCurrentCategory={setCurrentCategory}
-        />
-        {isLoading ? (
+        <CategoryFilter onSelectCategory={getFacts} />
+        {error ? (
+          <p className="error">Error loading facts: {error}</p>
+        ) : isLoading ? (
           <Loader />
         ) : (
-          <FactList facts={facts} currentCategory={currentCategory} />
+          <FactList facts={facts} currentCategory={currentCategory} onDeleteFact={deleteFact} />
         )}
       </main>
     </div>

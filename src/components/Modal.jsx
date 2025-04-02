@@ -1,9 +1,18 @@
-function Modal({ message, onClose }) {
+function Modal({ message, onClose, type = 'info' }) {
   return (
     <div className="modal-overlay">
       <div className="modal">
         <p>{message}</p>
-        <button className="btn" onClick={onClose}>Close</button>
+        <div className="modal-buttons">
+          <button className="btn" onClick={onClose}>
+            {type === 'confirm' ? 'Cancel' : 'Close'}
+          </button>
+          {type === 'confirm' && (
+            <button className="btn btn-delete" onClick={onClose}>
+              Delete
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
