@@ -73,7 +73,7 @@ function FactList({ facts, currentCategory, onDeleteFact, onVote }) {
   };
 
   return (
-    <section>
+    <section className="facts-container">
       <div className="facts-sort">
         <span>Sort by: </span>
         <button
@@ -86,13 +86,13 @@ function FactList({ facts, currentCategory, onDeleteFact, onVote }) {
           className={`btn-sort ${sorts.trust ? 'active' : ''}`}
           onClick={() => toggleSort('trust')}
         >
-          Trust {getSortIcon('trust')}
+          Truthiness {getSortIcon('trust')}
         </button>
         <button
           className={`btn-sort ${sorts.interesting ? 'active' : ''}`}
           onClick={() => toggleSort('interesting')}
         >
-          Interesting {getSortIcon('interesting')}
+          Approval {getSortIcon('interesting')}
         </button>
         <button
           className={`btn-sort ${sorts.mindblowing ? 'active' : ''}`}
