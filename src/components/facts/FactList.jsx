@@ -2,26 +2,74 @@ import { useState } from 'react';
 import Fact from './Fact';
 
 function FactList({ facts, currentCategory, onDeleteFact, onVote }) {
-  const [sortBy, setSortBy] = useState('newest');
+  const [sorts, setSorts] = useState({
+    date: 'desc', // desc = newest first, asc = oldest first
+    trust: null, // desc = most trusted, asc = disputed
+    interesting: null, // desc = most interesting first
+    mindblowing: null // desc = most mindblowing first
+  });
+
+  const toggleSort = type => {
+    setSorts(prev => {
+      // Reset all sorts
+      const newSorts = {
+        date: null,
+        trust: null,
+        interesting: null,
+        mindblowing: null
+      };
+
+      // Toggle the clicked sort
+      if (prev[type] === 'desc') {
+        newSorts[type] = 'asc';
+      } else if (prev[type] === 'asc' || prev[type] === null) {
+        newSorts[type] = 'desc';
+      }
+
+      return newSorts;
+    });
+  };
 
   const getSortedFacts = () => {
     const sortedFacts = [...facts];
 
-    switch (sortBy) {
-      case 'oldest':
-        return sortedFacts.sort(
-          (a, b) => new Date(a.created_at) - new Date(b.created_at)
-        );
-      case 'mostTrusted':
-        return sortedFacts.sort((a, b) => a.votesFalse - b.votesFalse);
-      case 'leastTrusted':
-        return sortedFacts.sort((a, b) => b.votesFalse - a.votesFalse);
-      case 'newest':
+    // Apply active sort
+    const activeSortType = Object.entries(sorts).find(
+      ([, direction]) => direction
+    )?.[0];
+    const sortDirection = sorts[activeSortType];
+
+    if (!activeSortType) return sortedFacts;
+
+    switch (activeSortType) {
+      case 'date':
+        return sortedFacts.sort((a, b) => {
+          const diff = new Date(b.created_at) - new Date(a.created_at);
+          return sortDirection === 'desc' ? diff : -diff;
+        });
+      case 'trust':
+        return sortedFacts.sort((a, b) => {
+          const diff = a.votesFalse - b.votesFalse;
+          return sortDirection === 'desc' ? diff : -diff;
+        });
+      case 'interesting':
+        return sortedFacts.sort((a, b) => {
+          const diff = b.votesInteresting - a.votesInteresting;
+          return sortDirection === 'desc' ? diff : -diff;
+        });
+      case 'mindblowing':
+        return sortedFacts.sort((a, b) => {
+          const diff = b.votesMindblowing - a.votesMindblowing;
+          return sortDirection === 'desc' ? diff : -diff;
+        });
       default:
-        return sortedFacts.sort(
-          (a, b) => new Date(b.created_at) - new Date(a.created_at)
-        );
+        return sortedFacts;
     }
+  };
+
+  const getSortIcon = type => {
+    if (!sorts[type]) return '';
+    return sorts[type] === 'desc' ? '↓' : '↑';
   };
 
   return (
@@ -29,28 +77,28 @@ function FactList({ facts, currentCategory, onDeleteFact, onVote }) {
       <div className="facts-sort">
         <span>Sort by: </span>
         <button
-          className={`btn-sort ${sortBy === 'newest' ? 'active' : ''}`}
-          onClick={() => setSortBy('newest')}
+          className={`btn-sort ${sorts.date ? 'active' : ''}`}
+          onClick={() => toggleSort('date')}
         >
-          Newest
+          Date {getSortIcon('date')}
         </button>
         <button
-          className={`btn-sort ${sortBy === 'oldest' ? 'active' : ''}`}
-          onClick={() => setSortBy('oldest')}
+          className={`btn-sort ${sorts.trust ? 'active' : ''}`}
+          onClick={() => toggleSort('trust')}
         >
-          Oldest
+          Trust {getSortIcon('trust')}
         </button>
         <button
-          className={`btn-sort ${sortBy === 'mostTrusted' ? 'active' : ''}`}
-          onClick={() => setSortBy('mostTrusted')}
+          className={`btn-sort ${sorts.interesting ? 'active' : ''}`}
+          onClick={() => toggleSort('interesting')}
         >
-          Most Trusted
+          Interesting {getSortIcon('interesting')}
         </button>
         <button
-          className={`btn-sort ${sortBy === 'leastTrusted' ? 'active' : ''}`}
-          onClick={() => setSortBy('leastTrusted')}
+          className={`btn-sort ${sorts.mindblowing ? 'active' : ''}`}
+          onClick={() => toggleSort('mindblowing')}
         >
-          Disputed
+          Mindblowing {getSortIcon('mindblowing')}
         </button>
       </div>
 
