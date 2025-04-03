@@ -115,6 +115,19 @@ ul {
   background-color: #282726;
 }
 
+.vote-buttons button:disabled {
+  opacity: 0.5;
+  transform: none;
+  background-color: #282726;
+  border-color: #ddd;
+  box-shadow: none;
+}
+
+.vote-buttons button:disabled:hover {
+  transform: none;
+  background-color: #282726;
+}
+
 .source:link,
 .source:visited {
   color: #a8a29e;

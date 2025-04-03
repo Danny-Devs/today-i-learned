@@ -4,9 +4,16 @@ import Modal from '../ui/Modal';
 
 function Fact({ fact, onDeleteFact, onVote }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [votedTypes, setVotedTypes] = useState({
+    votesInteresting: false,
+    votesMindblowing: false,
+    votesFalse: false
+  });
+
   const category = CATEGORIES.find(c => c.name === fact.category);
 
-  const handleVote = column => {
+  const handleVoteClick = column => {
+    setVotedTypes(prev => ({ ...prev, [column]: true }));
     onVote(fact.id, column);
   };
 
@@ -27,13 +34,22 @@ function Fact({ fact, onDeleteFact, onVote }) {
         {category.name}
       </span>
       <div className="vote-buttons">
-        <button onClick={() => handleVote('votesInteresting')}>
+        <button
+          onClick={() => handleVoteClick('votesInteresting')}
+          disabled={votedTypes.votesInteresting}
+        >
           👍 {fact.votesInteresting}
         </button>
-        <button onClick={() => handleVote('votesMindblowing')}>
+        <button
+          onClick={() => handleVoteClick('votesMindblowing')}
+          disabled={votedTypes.votesMindblowing}
+        >
           🤯 {fact.votesMindblowing}
         </button>
-        <button onClick={() => handleVote('votesFalse')}>
+        <button
+          onClick={() => handleVoteClick('votesFalse')}
+          disabled={votedTypes.votesFalse}
+        >
           ⛔️ {fact.votesFalse}
         </button>
         <button className="btn btn-x" onClick={() => setShowDeleteModal(true)}>
