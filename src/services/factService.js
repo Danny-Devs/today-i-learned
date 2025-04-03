@@ -38,11 +38,11 @@ export const deleteFact = async (id) => {
 };
 
 // Two-step vote update: get current value then increment
-export const updateVoteCount = async (factId, column) => {
+export const updateVoteCount = async (factId, columnName) => {
   // First get current value
   const { data: fact, error: fetchError } = await supabase
     .from('facts')
-    .select(column)
+    .select(columnName)
     .eq('id', factId)
     .single();
 
@@ -51,7 +51,7 @@ export const updateVoteCount = async (factId, column) => {
   // Then increment it
   const { data, error } = await supabase
     .from('facts')
-    .update({ [column]: fact[column] + 1 })
+    .update({ [columnName]: fact[columnName] + 1 })
     .eq('id', factId)
     .select();
 

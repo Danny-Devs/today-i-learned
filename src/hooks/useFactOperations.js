@@ -50,9 +50,9 @@ export const useFactOperations = () => {
   }, []);
 
   // Precise update of a single fact's vote count
-  const handleVote = useCallback(async (factId, column) => {
+  const handleVote = useCallback(async (factId, columnName) => {
     try {
-      const updatedFact = await updateVoteCount(factId, column);
+      const updatedFact = await updateVoteCount(factId, columnName);
       // Only update the changed fact in state, preserving others
       setFacts(prev =>
         prev.map(fact =>

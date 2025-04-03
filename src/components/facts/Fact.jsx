@@ -12,9 +12,9 @@ function Fact({ fact, onDeleteFact, onVote }) {
 
   const category = CATEGORIES.find(c => c.name === fact.category);
 
-  const handleVoteClick = column => {
-    setVotedTypes(prev => ({ ...prev, [column]: true }));
-    onVote(fact.id, column);
+  const handleVoteClick = columnName => {
+    setVotedTypes(prev => ({ ...prev, [columnName]: true }));
+    onVote(fact.id, columnName);
   };
 
   return (
