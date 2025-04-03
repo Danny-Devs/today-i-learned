@@ -8,6 +8,36 @@ function NewFactForm({ showForm, onPostFact, setFacts }) {
   const [category, setCategory] = useState('');
   const [modalMessage, setModalMessage] = useState('');
 
+  const prepareUrl = url => {
+    // Remove any leading/trailing whitespace
+    url = url.trim();
+
+    // If it already has a protocol, return as is
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+
+    // Add https:// if no protocol is present
+    return `https://${url}`;
+  };
+
+  const isValidDomain = domain => {
+    // Basic domain validation regex
+    // Matches: example.com, sub.example.com, www.example.co.uk, etc.
+    const domainRegex =
+      /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
+
+    try {
+      // Remove protocol and path if present
+      const url = new URL(
+        domain.startsWith('http') ? domain : `https://${domain}`
+      );
+      return domainRegex.test(url.hostname);
+    } catch {
+      return domainRegex.test(domain);
+    }
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     // Check if the form is valid
@@ -19,17 +49,18 @@ function NewFactForm({ showForm, onPostFact, setFacts }) {
       setModalMessage('Please provide a source.');
       return;
     }
-    try {
-      // If URL doesn't start with http:// or https://, add https://
-      const urlToCheck =
-        source.startsWith('http://') || source.startsWith('https://')
-          ? source
-          : `https://${source}`;
-      new URL(urlToCheck);
-    } catch {
-      setModalMessage('Please provide a valid URL.');
+
+    // First check if it's a valid domain
+    if (!isValidDomain(source)) {
+      setModalMessage(
+        'Please enter a valid website address (e.g., wikipedia.org or bbc.com)'
+      );
       return;
     }
+
+    // Then prepare the URL
+    const preparedUrl = prepareUrl(source);
+
     if (!category) {
       setModalMessage('Please select a category.');
       return;
@@ -38,7 +69,7 @@ function NewFactForm({ showForm, onPostFact, setFacts }) {
     try {
       const newFact = {
         text,
-        source,
+        source: preparedUrl,
         category,
         votesInteresting: 0,
         votesMindblowing: 0,
@@ -78,7 +109,7 @@ function NewFactForm({ showForm, onPostFact, setFacts }) {
       <span>{200 - text.length}</span>
       <input
         type="text"
-        placeholder="Trustworthy source..."
+        placeholder="Trustworthy source... (e.g., wikipedia.org)"
         value={source}
         onChange={e => setSource(e.target.value)}
       />
