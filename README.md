@@ -131,7 +131,7 @@ src/
 
 ## 🙏 Acknowledgments
 
-- Original concept by [Jonas Schmedtmann](https://jonas.io/) - demonstrating how to build a full-stack app in under a week
+- Original concept by [Jonas Schmedtmann](https://jonas.io/)
 - Built with React, Vite, and Supabase
 - Enhanced with custom hooks pattern and component-driven architecture
 - Special thanks to the React and Supabase communities
